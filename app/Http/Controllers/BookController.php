@@ -51,6 +51,9 @@ class BookController extends Controller
     public function show(string $id)
     {
         $book = Book::find($id);
+        if (!$book) {
+            return redirect()->route('books.index')->with('error', 'Book not found.');
+        }
         return view('books.show', compact('book'));
     }
 
@@ -124,5 +127,14 @@ class BookController extends Controller
         $book->borrowed_at = null;
         $book->save();
         return redirect()->route('books.index')->with('success', 'You have successfully returned the book.');
+    }
+
+
+    public function borrowedBooks()
+    {
+
+        $borrowedBooks = Book::whereNotNull('borrowed_by')->get();
+        $countBorrowedBook = Book::whereNotNull('borrowed_by')->count();
+        return view('books.borrowed', compact('borrowedBooks', 'countBorrowedBook'));
     }
 }

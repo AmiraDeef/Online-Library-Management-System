@@ -3,7 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BookController;
-
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +16,26 @@ use App\Http\Controllers\HomeController;
 |
 */
 
+Route::middleware(['auth'])->group(function () {
+    Route::get('home', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::middleware(['admin'])->group(function () {
+        Route::get('books/borrowed', [BookController::class, 'borrowedBooks'])->name('borrowed.books');
+        Route::resource('books', BookController::class);
+        Route::get('post', [HomeController::class, 'post']);
+        Route::match(['get', 'post'], '/admin/search-student', [AdminController::class, 'searchStudent'])->name('search.student');
+        Route::get('users/all', [AdminController::class, 'allUsers'])->name('all.users');
+    });
+});
+
+
+
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -25,19 +45,19 @@ Route::get('/', function () {
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::get('home', [HomeController::class, 'index'])->middleware('auth')->name('home');
+// Route::get('home', [HomeController::class, 'index'])->middleware('auth')->name('home');
 
 
-Route::resource('books', BookController::class)->middleware('auth')->middleware(['auth', 'admin']);
+// Route::resource('books', BookController::class)->middleware('auth')->middleware(['auth', 'admin']);
 
-route::get('post', [HomeController::class, 'post'])->middleware(['auth', 'admin']);
+// route::get('post', [HomeController::class, 'post'])->middleware(['auth', 'admin']);
 
-Route::middleware('auth')->group(function () {
-    // Route::get('books', [BookController::class, 'index']);
-    // Route::resource('books', BookController::class);
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     // Route::get('books', [BookController::class, 'index']);
+//     // Route::resource('books', BookController::class);
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 require __DIR__ . '/auth.php';
