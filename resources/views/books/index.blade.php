@@ -12,14 +12,16 @@
 
                 <div class="mb-6 flex items-center space-x-10">
                     <!-- Back Button -->
-                    <a href="{{ url()->previous() }}" class="btn btn-primary mr-4">
+                    <a href="/home" class="btn btn-primary mr-4">
                         Back
                     </a>
 
                     <!-- Add Book Button -->
+                    @if(Auth::user()->usertype == 'admin')
                     <a href="/books/create" class="btn btn-outline-primary">
                         Add Book
                     </a>
+                    @endif
                 </div>
 
                 <table border=2 class="table table-striped">
@@ -53,22 +55,38 @@
 
                         <td> {{ $book->created_at }} </td>
                         <td> {{ $book->updated_at}} </td>
-
-
-
                         @if(Auth::user()->usertype == 'student')
-                        <td><a class="btn btn-primary" href="/books/{{$book->id}}/view">View</a></td>
+                        <td><a class="btn btn-outline-primary" href="/books/{{$book->id}}">View</a></td>
 
+                        @if(!$book->is_borrowed)
+                        <td>
+                            <form method="post" action="{{ route('books.borrow', $book->id) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-secondary">Borrow</button>
+                            </form>
+                        </td>
+                        @elseif($book->borrowed_by == Auth::id())
+                        <td>
+                            <form method="post" action="{{ route('books.returnBook', $book->id) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-success">Return</button>
+                            </form>
+                        </td>
+                        @else
+                        <td><button class="btn btn-outline-secondary" disabled title="This book is currently borrowed by another student.">Borrowed</button></td>
+                        @endif
                         @elseif(Auth::user()->usertype == 'admin')
                         <td><a class="btn btn-outline-primary" href="/books/{{$book->id}}/edit">Edit</a></td>
                         <td>
                             <form action="/books/{{$book->id}}" method="post">
                                 @csrf
                                 @method('delete')
-                                <input type="submit" class="btn btn-outline-danger" value="Delete">
+                                <button type="submit" class="btn btn-outline-danger">Delete</button>
                             </form>
                         </td>
                         @endif
+
+
 
                     </tr>
 

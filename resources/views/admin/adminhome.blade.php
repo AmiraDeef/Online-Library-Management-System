@@ -9,17 +9,29 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 flex">
 
             <!-- Sidebar -->
-            <div class="w-1/4 bg-gray-300 p-6 rounded-lg shadow-sm">
-                <h3 class="mb-6 font-bold text-xl border-b pb-2">Admin Actions:</h3>
-                <ul class="list-disc pl-5">
-                    <li class="my-2"><a class="btn btn-primary btn-block btn-sm" href="{{ route('borrowed.books') }}" class="hover:text-blue-500 transition ease-in-out duration-150">View Borrowed Books</a></li>
-                    <li class="my-2"><a class="btn btn-primary btn-block btn-sm" href="{{ route('books.index') }}" class="hover:text-blue-500 transition ease-in-out duration-150">Manage Books</a></li>
-                    <li class="my-2"><a class="btn btn-primary btn-block btn-sm" href="{{ route('all.users') }}" class="hover:text-blue-500 transition ease-in-out duration-150">Manage Users</a></li>
+            <div class="bg-gray-300 w-1/4 p-6 rounded-lg shadow-sm mr-4">
+                <h3 class="mb-6 font-bold text-xl border-b pb-2 text-gray-700">Admin Command Center</h3>
+                <ul class="list-none">
+                    <li class="my-2">
+                        <a href="{{ route('borrowed.books') }}" class="btn btn-outline-secondary w-48 block text-center">
+                            View Borrowed Books
+                        </a>
+                    </li>
+                    <li class="my-2">
+                        <a href="{{ route('books.index') }}" class="btn btn-outline-secondary w-48 block text-center">
+                            Manage Books
+                        </a>
+                    </li>
+                    <li class="my-2">
+                        <a href="{{ route('all.users') }}" class="btn btn-outline-secondary w-48 block text-center">
+                            Manage Users
+                        </a>
+                    </li>
                 </ul>
             </div>
 
             <!-- Main Content -->
-            <div class="w-3/4 ml-8 bg-white p-6 overflow-hidden shadow-lg sm:rounded-lg">
+            <div class="w-3/4 bg-white p-6 overflow-hidden shadow-lg sm:rounded-lg">
 
                 <!-- Centered Hello, User -->
                 <div class="flex justify-center items-center h-24 bg-gray-100 rounded shadow-sm mb-4">

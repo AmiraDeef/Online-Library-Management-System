@@ -18,12 +18,14 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'email', 'password', 'usertype',
+        'name', 'email', 'password', 'usertype', 'books_borrowed',
     ];
     public function borrowedBooks()
     {
         return $this->hasMany(Book::class, 'borrowed_by');
     }
+    const MAX_BORROW_LIMIT = 5;
+
 
     /**
      * The attributes that should be hidden for serialization.

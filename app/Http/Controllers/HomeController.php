@@ -16,17 +16,13 @@ class HomeController extends Controller
             $usertype = Auth()->user()->usertype;
 
             if ($usertype == 'student') {
-                return view('dashboard');
+                $borrowedBooks = auth()->user()->borrowedBooks;
+                return view('dashboard', compact('borrowedBooks'));
             } else if ($usertype == 'admin') {
                 return view('admin.adminhome');
             } else {
                 return redirect()->back();
             }
         }
-    }
-
-    public function books()
-    {
-        return view("books");
     }
 }

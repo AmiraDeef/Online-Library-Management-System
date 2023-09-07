@@ -19,24 +19,24 @@
                 <h3 class="mb-4 text-lg">Total Borrowed Books: {{ $countBorrowedBook }}</h3>
 
                 @if($countBorrowedBook > 0)
-                <table class="min-w-full table-auto">
+                <table class="min-w-full table-auto divide-y divide-gray-200">
                     <thead>
                         <tr>
                             <th class="px-4 py-2">ID</th>
                             <th class="px-4 py-2">Title</th>
                             <th class="px-4 py-2">Author</th>
                             <th class="px-4 py-2">Borrowed By</th>
-                            <!-- Add more columns as needed -->
+
                         </tr>
                     </thead>
-                    <tbody>
-                        @foreach($borrowedBooks as $book)
-                        <tr>
-                            <td class="border px-4 py-2">{{ $book->id }}</td>
-                            <td class="border px-4 py-2">{{ $book->title }}</td>
-                            <td class="border px-4 py-2">{{ $book->author }}</td>
-                            <td class="border px-4 py-2">{{ $book->borrowed_by }}</td>
-                            <!-- Add more data cells as needed -->
+                    <tbody class="divide-y divide-gray-200">
+                        @foreach($borrowed_Books as $book)
+                        <tr class="{{ $loop->iteration % 2 === 0 ? 'bg-gray-100' : '' }}">
+                            <td class="px-4 py-2">{{ $book->id }}</td>
+                            <td class="px-4 py-2">{{ $book->title }}</td>
+                            <td class="px-4 py-2">{{ $book->author }}</td>
+                            <td class="px-4 py-2">{{ optional($book->borrowedBy)->name ?? 'Unknown' }}</td>
+
                         </tr>
                         @endforeach
                     </tbody>
@@ -44,6 +44,7 @@
                 @else
                 <p class="text-gray-700">Currently, there are no borrowed books.</p>
                 @endif
+
             </div>
         </div>
     </div>

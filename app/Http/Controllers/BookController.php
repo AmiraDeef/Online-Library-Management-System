@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookController extends Controller
 {
@@ -104,15 +106,28 @@ class BookController extends Controller
     public function borrow(Book $book)
     {
 
+        $user = auth()->user();
+
+
+        if ($user->usertype !== 'student') {
+            return redirect()->back()->withErrors('Only students can borrow books.');
+        }
+
+
         if ($book->is_borrowed) {
             return redirect()->back()->withErrors('This book is already borrowed.');
         }
-
+        $countUserBook = Book::where('borrowed_by', $user->id)->count();
+        if ($countUserBook >= User::MAX_BORROW_LIMIT) {
+            return redirect()->back()->withErrors('You have reached your borrowing limit. Please return some books before borrowing more.');
+        }
 
         $book->borrowed_by = auth()->id();
         $book->borrowed_at = now();
         $book->is_borrowed = true;
         $book->save();
+
+
 
         return redirect()->back()->withSuccess('You have successfully borrowed the book.');
     }
@@ -130,11 +145,11 @@ class BookController extends Controller
     }
 
 
-    public function borrowedBooks()
+    public function borrowed_Books()
     {
 
-        $borrowedBooks = Book::whereNotNull('borrowed_by')->get();
+        $borrowed_Books = Book::whereNotNull('borrowed_by')->get();
         $countBorrowedBook = Book::whereNotNull('borrowed_by')->count();
-        return view('books.borrowed', compact('borrowedBooks', 'countBorrowedBook'));
+        return view('books.borrowed', compact('borrowed_Books', 'countBorrowedBook'));
     }
 }
