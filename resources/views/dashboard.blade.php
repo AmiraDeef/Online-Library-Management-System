@@ -38,7 +38,7 @@
                 </div>
                 @if(Auth::user()->usertype == 'student')
                 <div class="bg-blue-100 p-4 rounded mb-4">
-                    You have borrowed {{ Auth::user()->books_borrowed }} out of a maximum of 5 books.
+                    You have borrowed {{ $countUserBook }} out of a maximum of 5 books.
                 </div>
                 @endif
                 <h3 class="font-bold mb-4">Your Borrowed Books</h3>
@@ -53,12 +53,12 @@
                     </thead>
                     <tbody>
                         @if($borrowedBooks && $borrowedBooks->count() > 0)
-                        @foreach($borrowedBooks as $book)
+                        @foreach( $borrowedBooks as $book)
                         <tr>
                             <td class="border px-4 py-2">{{ $book->title }}</td>
                             <td class="border px-4 py-2">{{ $book->author }}</td>
                             <td class="border px-4 py-2">{{ $book->borrowed_at }}</td>
-                            <td class="border px-4 py-2">{{ $book->returned_at }}</td>
+                            <td class="border px-4 py-2">{{ $book->due_date }}</td>
                         </tr>
                         @endforeach
                         @else

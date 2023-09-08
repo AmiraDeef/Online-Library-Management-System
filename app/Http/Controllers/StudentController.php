@@ -12,7 +12,12 @@ class StudentController extends Controller
 {
     public function dashboard()
     {
-        $borrowedBooks = auth()->user()->borrowedBooks;
-        return view('dashboard', compact('borrowedBooks'));
+        $user = auth()->user();
+        $borrowedBooks = Book::where('borrowed_by', $user->id)->get();
+
+        return view('dashboard', [
+            'borrowedBooks' => $borrowedBooks,
+            'countUserBook' => $borrowedBooks->count(),
+        ]);
     }
 }

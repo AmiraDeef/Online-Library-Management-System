@@ -40,8 +40,12 @@
 
 
                 <div class="mt-6 flex justify-center space-x-6">
+                    @auth
+                    <a href="/home" class="btn btn-primary  mr-4">Browse the catalog</a>
+                    @else
                     <a href="/home" class="btn btn-primary  mr-4">Browse the catalog</a>
                     <a href="/register" class="btn btn-outline-primary  mr-4">Create an account</a>
+                    @endauth
                 </div>
             </div>
         </div>

@@ -40,8 +40,8 @@ class BookController extends Controller
             'title' => $request->title,
             'author' => $request->author,
             'description' => $request->description,
-            'publication_date' => $request->publication_date
-            //'user_id' => Auth::id(),
+            'publication_date' => $request->publication_date,
+
         ]);
 
         return redirect(("/books"));
@@ -124,6 +124,7 @@ class BookController extends Controller
 
         $book->borrowed_by = auth()->id();
         $book->borrowed_at = now();
+        $book->due_date = now()->addDays(7);
         $book->is_borrowed = true;
         $book->save();
 

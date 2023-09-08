@@ -5,6 +5,15 @@
         </h2>
     </x-slot>
 
+    @if($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
 
     <div class="py-12 lg:py-16">
         <div class="w-full mx-auto sm:px-6 lg:px-12 space-y-6">
@@ -18,7 +27,7 @@
 
                     <!-- Add Book Button -->
                     @if(Auth::user()->usertype == 'admin')
-                    <a href="/books/create" class="btn btn-outline-primary">
+                    <a href="{{ route('books.create')}}" class="btn btn-outline-primary">
                         Add Book
                     </a>
                     @endif
@@ -56,7 +65,7 @@
                         <td> {{ $book->created_at }} </td>
                         <td> {{ $book->updated_at}} </td>
                         @if(Auth::user()->usertype == 'student')
-                        <td><a class="btn btn-outline-primary" href="/books/{{$book->id}}">View</a></td>
+                        <td><a class="btn btn-outline-primary" href="{{ route('books.show',$book->id) }}">View</a></td>
 
                         @if(!$book->is_borrowed)
                         <td>
@@ -76,9 +85,9 @@
                         <td><button class="btn btn-outline-secondary" disabled title="This book is currently borrowed by another student.">Borrowed</button></td>
                         @endif
                         @elseif(Auth::user()->usertype == 'admin')
-                        <td><a class="btn btn-outline-primary" href="/books/{{$book->id}}/edit">Edit</a></td>
+                        <td><a class="btn btn-outline-primary" href="{{ route('books.edit', $book->id) }}">Edit</a></td>
                         <td>
-                            <form action="/books/{{$book->id}}" method="post">
+                            <form action="{{ route('books.destroy', $book->id) }}" method="post">
                                 @csrf
                                 @method('delete')
                                 <button type="submit" class="btn btn-outline-danger">Delete</button>

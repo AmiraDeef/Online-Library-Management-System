@@ -9,7 +9,7 @@
         <div class="w-full mx-auto sm:px-6 lg:px-12 space-y-6">
             <div class="p-6 sm:p-10 lg:p-12 bg-white shadow sm:rounded-lg">
 
-                <form method="post" action="/books/{{$book['id']}}">
+                <form method="post" action="{{ route('books.update', ['book' => $book['id']]) }}">
                     @csrf
                     @method('PUT')
                     Title <input type="text" name="title" value="{{$book['title']}}" placeholder="Title"><br><br>

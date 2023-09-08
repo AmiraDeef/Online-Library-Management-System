@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\User;
+use App\Models\Book;
 
 use Illuminate\Support\Facades\Auth;
 
@@ -16,8 +17,7 @@ class HomeController extends Controller
             $usertype = Auth()->user()->usertype;
 
             if ($usertype == 'student') {
-                $borrowedBooks = auth()->user()->borrowedBooks;
-                return view('dashboard', compact('borrowedBooks'));
+                return redirect()->route('student.dashboard');
             } else if ($usertype == 'admin') {
                 return view('admin.adminhome');
             } else {
