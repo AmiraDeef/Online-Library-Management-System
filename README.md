@@ -1,3 +1,48 @@
+# Online Library Management System
+
+This is a simple web application that allows users to manage and access library resources. It is divided into two main modules:
+
+## Admin Module
+This module allows admins to manage the library's book collection, users, and borrowings.
+
+### Features:
+
+- **Admin Dashboard:** 
+    - An integrated view displaying borrowed books, the entire book collection, and all registered users.
+     -![Admin Dashboard Screenshot](./screenshots/admin-dashboard.png)
+    
+- **Book Management:** Tools for adding, updating, or removing books from the collection.
+     -![Admin books management Screenshot](./screenshots/admin-manage-books.png)
+- **Student Search:** Functionality to search for students using their unique student ID and view their details.
+      -![Admin students management Screenshot](./screenshots/admin-manage-students.png)
+- **Profile Management:** Admins can edit their own profile details.
+      -![Admin profile Screenshot](./screenshots/profile.png)
+- **Access Control:** Authorization mechanisms to ensure only admins can access and modify library data.
+
+## Student Module
+This module allows students to browse the library's book collection, borrow books, and track their borrowings.
+
+### Features:
+
+- **Registration:** A registration system for students to access and borrow library resources.
+   -![Registration Screenshot](./screenshots/register.png)
+- **Browse Books:** 
+    - Allows students to view all books and their details.
+- **Book Borrowing:** Students can borrow available books and track them.
+ -![Student borrows books Screenshot](./screenshots/ListOfBooks.png)
+- **Student Dashboard:** 
+    - Post-login, students can view and manage their borrowed books, including returns.
+    - ![Student Dashboard Screenshot](./screenshots/StudentDashboard.png)
+
+- **Profile Management:** Personal profile editing tools for students.
+   -![Student profile Screenshot](./screenshots/profile.png)
+- **Borrowing History:** Displays a history of borrowed books and their expected return dates.
+
+
+---
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
